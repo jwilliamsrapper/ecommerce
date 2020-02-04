@@ -66,7 +66,7 @@ const Styles = StyleSheet.create({
   },
   NextBtn: {
     width: '60%',
-    marginTop: 50, 
+    marginTop: 50,
     alignSelf: 'center',
   },
   catList: {
@@ -77,7 +77,32 @@ const Styles = StyleSheet.create({
     borderBottomWidth: 2,
     borderBottomColor: 'grey',
     paddingRight: 20
-},
+  },
+  addButton: {
+    width: '95%',
+    backgroundColor: 'green',
+    marginTop: 1,
+    alignSelf: 'center',
+    justifyContent: 'center',
+    alignContent: 'center',
+    alignItems: 'center'
+  },
+  addButtonText: {
+    color: 'white',
+    padding: 5,
+    fontSize: 16
+  },
+  addedColor:{ 
+    marginLeft: 10,
+    marginTop: 3,
+    borderColor: 'blue',
+    borderWidth: 1,
+    padding: 4
+  },
+  row: {
+    flexDirection: 'row',
+    flexWrap: 'wrap'
+  }
 });
 
 export default Styles;

@@ -1,5 +1,5 @@
 import React from 'react';
-import { ScrollView, View, Image, TouchableOpacity, Alert } from 'react-native'
+import { ScrollView, View, Image, TouchableOpacity, ActivityIndicator } from 'react-native'
 import { Container, Header, Content, Card, CardItem, Body, Text,Left,Title,Right } from 'native-base';
 import { getDataAll } from '../../config/firebase/Database/GetData'
 
@@ -8,30 +8,46 @@ export default class CategoryList extends React.Component {
     super();
     this.state = {
       content: '',
-      data: []
+      data: [],
+      loading: true
     }
   }
 
   async componentDidMount(){
     const res = await getDataAll('categories');
     this.setState({
-        data: res
+        data: res,
+        loading: false
     })
   }
 
 
   render() {
-        const { data } =  this.state;
+        const { data, loading } =  this.state;
     return (
         <Container>
-        <Header style={{backgroundColor: 'black', height: 30}}> 
-          {/* <Left/> */}
+           
+        {/* <Header style={{backgroundColor: 'black', height: 40}}> 
+        
           <Body style={{justifyContent: 'center', alignSelf: 'center', alignItems: 'center',marginLeft: '2%' }}>
             <Title>Collections</Title>
           </Body>
-          {/* <Right /> */}
-        </Header>
+        
+        </Header> */}
         <Content >
+
+        {!!loading &&
+          <View style={{
+            justifyContent: 'center',
+            alignContent: 'center',
+            alignItems: 'center',
+            alignSelf: 'center',
+            flex: 1,
+            //  marginTop: '20%'
+          }}>
+            <ActivityIndicator size="large" color="black" />
+          </View>}
+
         {!!data.length && data.map((item, i)=>{
             // console.log(item.docData.text)
             return(                

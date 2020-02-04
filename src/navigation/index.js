@@ -1,4 +1,5 @@
 import React from 'react'
+import { AsyncStorage } from 'react-native'
 import { createAppContainer, createSwitchNavigator } from "react-navigation";
 import { createStackNavigator } from 'react-navigation-stack';
 import { createDrawerNavigator } from 'react-navigation-drawer';
@@ -19,6 +20,18 @@ import AdminLogin from '../screens/AdminLogin/index'
 import AdminHeader from './AdminHeader'
 import AdminHome from '../screens/AdminHome/index'
 import AdminBottomTabNavigator from './AdminBottomTabNavigator'
+import AddProduct from '../screens/Catalog/AddProduct'
+import AddProductDetails from '../screens/Catalog/AddProductDetails'
+import AddImage from '../screens/Catalog/AddImage'
+import OtherDetails from '../screens/Catalog/OtherDetails'
+import AddPrice from '../screens/Catalog/AddPrice'
+import ProductDetailsAdmin from '../screens/ProductDetailsAdmin/index'
+import EditProfile from '../screens/Edit/EditProfile'
+import Terms from '../screens/Terms/index'
+import Loading from '../screens/Loading/index'
+import Disabled from '../screens/Disabled/index'
+import Search from '../screens/Search/index'
+import HeaderSearch from './Search'
 
 const Drawer = createDrawerNavigator(
   {
@@ -31,20 +44,33 @@ const Drawer = createDrawerNavigator(
     Orders: {
       screen: Orders
     },
-    ["Switch to Selling"]:{
+  },
+  //   {
+  //     contentComponent: drawerContentComponents
+  //   }
+)
+
+const VendorDrawer = createDrawerNavigator(
+  {
+    Home: {
+      screen: BottomTabNavigator,
+    },
+    Category: {
+      screen: CategoryList
+    },
+    Orders: {
+      screen: Orders
+    },
+    ["Switch to Selling"]: {
       screen: Switch
     }
   },
-//   {
-//     contentComponent: drawerContentComponents
-//   }
 )
-
-const MainStack = createStackNavigator({
-  drawer:{
-    screen: Drawer,
+const VendorStack = createStackNavigator({
+  drawer: {
+    screen: VendorDrawer,
     navigationOptions: {
-      headerTitle: <Headers/>
+      headerTitle: <Headers />
     }
   },
   CategoryPage: {
@@ -71,11 +97,11 @@ const MainStack = createStackNavigator({
       header: null
     }
   },
-  AddSubscription:{
-    screen:  AddSubscription,
-   navigationOptions: {
-     headerTitle: "Payment"
-   }
+  AddSubscription: {
+    screen: AddSubscription,
+    navigationOptions: {
+      headerTitle: "Payment"
+    }
   },
   Billing: {
     screen: Billing,
@@ -95,6 +121,7 @@ const MainStack = createStackNavigator({
       headerTitle: 'Your Cart'
     }
   },
+
   Switch: {
     screen: Switch
   },
@@ -104,8 +131,11 @@ const MainStack = createStackNavigator({
       header: null
     }
   },
-},{
-  defaultNavigationOptions:{
+  Terms: {
+    screen: Terms
+  }
+}, {
+  defaultNavigationOptions: {
     headerStyle: {
       backgroundColor: 'black',
     },
@@ -114,7 +144,112 @@ const MainStack = createStackNavigator({
       fontWeight: 'bold',
       color: 'white'
     },
+  },
+  initialRouteName: 'drawer'
+})
+
+const MainStack = createStackNavigator({
+  drawer: {
+    screen: Drawer,
+    navigationOptions: {
+      headerTitle: <Headers />
+    }
+  },
+  CategoryPage: {
+    screen: CategoryPage,
+    navigationOptions: {
+      headerTitle: 'Products'
+    }
+  },
+  ProductPage: {
+    screen: ProductPage,
+    navigationOptions: {
+      header: null
+    }
+  },
+  Login: {
+    screen: Login,
+    navigationOptions: {
+      header: null
+    }
+  },
+  SignUp: {
+    screen: SignUp,
+    navigationOptions: {
+      header: null
+    }
+  },
+  AddSubscription: {
+    screen: AddSubscription,
+    navigationOptions: {
+      headerTitle: "Payment"
+    }
+  },
+  Billing: {
+    screen: Billing,
+    navigationOptions: {
+      headerTitle: 'Delievery Address'
+    }
+  },
+  Confirmation: {
+    screen: Confirmation,
+    navigationOptions: {
+      headerTitle: 'Confirm Purchase'
+    }
+  },
+  Cart: {
+    screen: Cart,
+    navigationOptions: {
+      headerTitle: 'Your Cart'
+    }
+  },
+
+  Switch: {
+    screen: Switch
+  },
+  AdminLogin: {
+    screen: AdminLogin,
+    navigationOptions: {
+      header: null
+    }
+  },
+  Terms: {
+    screen: Terms
+  },
+  Search: {
+    screen: Search,
+    navigationOptions: { 
+      header: null
+    }
   }
+}, {
+  defaultNavigationOptions: {
+    headerStyle: {
+      backgroundColor: 'black',
+    },
+    headerTintColor: '#fff',
+    headerTitleStyle: {
+      fontWeight: 'bold',
+      color: 'white'
+    },
+  },
+  initialRouteName: 'drawer'
+
+})
+
+const AuthStack = createStackNavigator({
+  Login: {
+    screen: Login,
+    navigationOptions: {
+      header: null
+    }
+  },
+  SignUp: {
+    screen: SignUp,
+    navigationOptions: {
+      header: null
+    }
+  },
 })
 
 
@@ -122,23 +257,78 @@ const AdminStack = createStackNavigator({
   AdminHome: {
     screen: AdminBottomTabNavigator,
     navigationOptions: {
-      headerTitle: <AdminHeader/>
+      headerTitle: <AdminHeader />
     }
+  },
+  AddProduct: {
+    screen: AddProduct,
+    navigationOptions: {
+      headerTitle: 'Add Products'
+    }
+  },
+  AddProductDetails: {
+    screen: AddProductDetails,
+    navigationOptions: {
+      headerTitle: 'Add some details'
+    }
+  },
+  AddImage: {
+    screen: AddImage,
+    navigationOptions: {
+      headerTitle: 'Pick images'
+    }
+  },
+  OtherDetails: {
+    screen: OtherDetails,
+    navigationOptions: {
+      headerTitle: 'other details'
+    }
+  },
+  AddPrice: {
+    screen: AddPrice,
+    navigationOptions: {
+      headerTitle: 'Add Price'
+    }
+  },
+  ProductDetailsAdmin: {
+    screen: ProductDetailsAdmin
+  },
+  EditProfile: {
+    screen: EditProfile
+  },
+  Terms: {
+    screen: Terms
   }
 });
 
+const LoadingStack = createStackNavigator({
+  Loading: {
+    screen: Loading,
+    navigationOptions: {
+      header: null
+    }
+  }
+})
 
 const MainNavigator = createAppContainer(
-    createSwitchNavigator(
-      {
-        // Auth: AuthStack,
-        App: MainStack,
-        Admin: AdminStack
-      },
-      {
-        initialRouteName: 'Admin',
+  createSwitchNavigator(
+    {
+      App: MainStack,
+      Vendor: VendorStack,
+      Auth: AuthStack,
+      Admin: AdminStack,
+      Load: LoadingStack,
+      Disabled: {
+        screen: Disabled
       }
+    },
+    {
+      initialRouteName: 'Load',
+    }
   ))
+
+
+
 
 
 const Navigator = createAppContainer(MainNavigator);

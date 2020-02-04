@@ -14,7 +14,7 @@ export default createBottomTabNavigator(
       Home: Home,
       Product: Product,
       Category: CategoryList,
-      Login: Login
+      Setting: Login
     },
     {
       defaultNavigationOptions: ({ navigation }) => ({
@@ -40,10 +40,10 @@ export default createBottomTabNavigator(
             <Ionicons name='ios-pricetags' size={25} color={tintColor} />
             )
           }
-          else if (routeName === 'Login') {
+          else if (routeName === 'Setting') {
             return(
-            focused ? <MaterialIcons name='account-circle' size={33} color={tintColor} /> :
-            <MaterialIcons name='account-circle' size={25} color={tintColor} />
+            focused ? <MaterialIcons name='settings' size={33} color={tintColor} /> :
+            <MaterialIcons name='settings' size={25} color={tintColor} />
             )
           }
           // You can return any component that you like here!

@@ -34,7 +34,7 @@ const Styles = StyleSheet.create({
         color: 'grey'
     },
     listContainer:{
-        marginTop: 10
+        marginTop: 25
     }
 });
 

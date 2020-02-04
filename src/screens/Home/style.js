@@ -32,7 +32,7 @@ const Styles = StyleSheet.create({
     square2: {
         flex: 1,
         flexDirection: 'row',
-        width: 700,
+        // width: 7000,
         height: '20%'
     },
   

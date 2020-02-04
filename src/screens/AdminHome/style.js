@@ -24,7 +24,7 @@ const Styles = StyleSheet.create({
     },
     BoxContainer: {
       width: '50%',
-      height: 160,
+      height: 140,
       backgroundColor: '#cb8ae1',
       marginTop: 20,
       alignContent: 'center',
@@ -44,6 +44,15 @@ const Styles = StyleSheet.create({
     VerticalDivider: {
       width: 10
     },
+    catList: {
+      width: '100%',
+      flex: 1,
+      // height: 350,
+      marginTop: 25,
+      borderBottomWidth: 1,
+      borderBottomColor: 'grey',
+      paddingRight: 20
+  },
 });
 
 export default Styles;

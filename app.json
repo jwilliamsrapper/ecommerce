@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "Mod",
-    "slug": "mod",
+    "name": "Mode",
+    "slug": "mode",
     "privacy": "public",
     "sdkVersion": "36.0.0",
     "platforms": [
@@ -9,7 +9,7 @@
       "android",
       "web"
     ],
-    "version": "1.0.0",
+    "version": "1.1.2",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "splash": {
@@ -24,8 +24,12 @@
       "**/*"
     ],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.yourcompany.yourappname"
     },
-    "description": ""
+    "description": "",
+    "android": {
+      "package": "com.mode.mode"
+    }
   }
 }

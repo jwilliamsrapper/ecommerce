@@ -8,10 +8,10 @@ export default class index extends Component {
   constructor(){
     super();
     this.state={
-      zipcode: 'a',
-      city: 's',
-      address: 'd',
-      state: 'f'
+      zipcode: '',
+      city: '',
+      address: '',
+      state: ''
     }
   }
   

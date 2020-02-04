@@ -43,11 +43,11 @@ export default class AccountListImage extends React.Component {
                     >{this.props.title}</Text>
                    
                 </View>
-                <MaterialCommunityIcons
+                {!this.props.icon && <MaterialCommunityIcons
                     name="delete"
                     size={25}
                     color="red"
-                />
+                />}
             </View>
                  <Text
                  style={{

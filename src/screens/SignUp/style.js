@@ -63,6 +63,10 @@ const styles = StyleSheet.create({
     },
     pickerLabel:{
       backgroundColor: '#454957',
+    },
+    qText:{
+      color: 'white',
+      alignSelf: 'center'
     }
 
   });

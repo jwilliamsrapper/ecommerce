@@ -40,14 +40,14 @@ export default class AddProduct extends React.Component {
         const { status, expires, permissions } = await Permissions.askAsync(
             Permissions.CALENDAR,
             Permissions.CAMERA_ROLL
-          );
-          if (status !== 'granted') {
-            alert('Hey! You heve not enabled selected permissions');
-          }
-        }
-    handlePress = async(item)=>{
+        );
+        // if (status !== 'granted') {
+        //     alert('Hey! You heve not enabled selected permissions');
+        // }
+    }
+    handlePress = async (item) => {
         console.log(item)
-        this.props.navigation.navigate("AddProductDetails",{"catData": item});
+        this.props.navigation.navigate("AddProductDetails", { "catData": item });
 
     }
 
@@ -60,26 +60,26 @@ export default class AddProduct extends React.Component {
                 {!!loading && <ActivityIndicator size={50} color="black"
                     style={{ marginTop: '10%' }}
                 />}
-                <View style={{flex: 1, flexDirection: 'row', flexWrap: 'wrap', justifyContent: 'center'}}>
+                <View style={{ flex: 1, flexDirection: 'row', flexWrap: 'wrap', justifyContent: 'center' }}>
                     {!!content.length && content.map((item, i) => {
                         // console.log('item=============>', item)
                         return (
-                            <TouchableOpacity 
-                            style={Styles.imageContainer} 
-                            onPress={()=>{this.handlePress(item)}}
-                            key={i}
+                            <TouchableOpacity
+                                style={Styles.imageContainer}
+                                onPress={() => { this.handlePress(item) }}
+                                key={i}
                             >
                                 <Text style={Styles.catNameTitle}>{item.text}</Text>
                                 <View style={{
-                                backgroundColor: 'pink', 
-                                width: 150,
-                                height: 150,
-                                marginHorizontal: 4
+                                    backgroundColor: 'pink',
+                                    width: 150,
+                                    height: 150,
+                                    marginHorizontal: 4
 
-                                }}><Image source={{uri: item.image}} style={{
+                                }}><Image source={{ uri: item.image }} style={{
                                     width: '100%',
                                     height: '100%'
-                                }}/></View>
+                                }} /></View>
                             </TouchableOpacity>
 
                         )

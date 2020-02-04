@@ -33,7 +33,7 @@ export default class Account extends React.Component {
         this.setState({loading: true})
         await AsyncStorage.removeItem("uid");
         await SignOut();
-        this.props.navigation.navigate("Login")
+        this.props.navigation.navigate("Auth")
     }
     render() {
         const {loading, userName, image} = this.state;
@@ -72,6 +72,21 @@ export default class Account extends React.Component {
                         </View>
                     </TouchableOpacity>
                 </View>
+
+                
+                <TouchableOpacity style={Styles.listContainer} onPress={()=>{this.props.navigation.navigate("App")}}>
+                    <AccountList
+                    iconName="switch"
+                    title="Switch to buyer"
+                    />
+                </TouchableOpacity>
+
+                <TouchableOpacity style={Styles.listContainer} onPress={()=>{this.props.navigation.navigate("Terms")}}>
+                    <AccountList
+                    iconName="book-open-variant"
+                    title="Terms & conditions"
+                    />
+                </TouchableOpacity>
 
                 <TouchableOpacity style={Styles.listContainer} onPress={this.handleLogOutPress}>
                     <AccountList

@@ -34,6 +34,9 @@ const Styles = StyleSheet.create({
         color: 'grey',
         fontSize: 13,
         textAlign: 'center'
+    },
+    verticalSeprator: {
+        marginHorizontal: 10
     }
 });
 

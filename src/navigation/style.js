@@ -5,7 +5,7 @@ import {logoColor, logoSize,logoWeigth} from '../config/themeColors'
 const Styles = StyleSheet.create({
     container: {
       flex: 1,
-      height: '100%',
+      height: '20%',
       alignContent: 'center',
       alignItems: 'center',
       backgroundColor: header,
@@ -19,6 +19,27 @@ const Styles = StyleSheet.create({
       color: logoColor,
       fontSize: logoSize,
       // fontWeigth: logoWeigth
+    },
+    row: {
+      flexDirection: 'row'
+    },
+    input: {
+      // width: '48%',
+      // height: '49%',
+      // borderRadius: 3,
+      // paddingLeft: 5,
+      // paddingTop: 2,
+      flexDirection: 'row'
+    },
+    searchText: {
+      color: 'grey',
+      paddingLeft: 7,
+      paddingTop: 1
+    },
+    inputContainer: {
+      backgroundColor: 'white',
+      width: '190%',
+      height: '50%',
     }
   });
 

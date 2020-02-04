@@ -52,8 +52,11 @@ const getCreditCardToken = (creditCardData) => {
  * @param creditCardToken
  * @return {Promise<Response>}
  */
-const subscribeUser = async (creditCardToken, all, that) => {
-  console.log(all)
+const subscribeUser = async (creditCardToken, all, that,shippingCost, there) => {
+  try{
+
+  
+  // console.log(all)
   return new Promise(async (resolve) => {
     console.log('Credit card token\n', creditCardToken.id);
     fetch('https://shrouded-island-13989.herokuapp.com/', {
@@ -68,18 +71,37 @@ const subscribeUser = async (creditCardToken, all, that) => {
         token: creditCardToken.id
       }),
     })
+    // .then(async(response) => {console.log(await response.json())})
       .then(async (response) => response.json())
       .then(async (responseJson) => {
-        console.log(responseJson.paid);
+        console.log(responseJson);
         if (responseJson.paid === true) {
           const uid = await AsyncStorage.getItem("uid");
-          await saveOrderInfo(uid, all.productInfo, all.billingDetails ).then(()=>{
-            // that.props.navigation.navigate("Home");
-            alert("order placed");
-            that.deleteProduct();
-          })
+          for(let i =0; i<all.productInfo.length; i++){
+            await saveOrderInfo(
+              uid, 
+              all.billingDetails,
+              all.productInfo[i].productId, 
+              all.productInfo[i].storeId,
+              all.productInfo[i].salePrice,
+              all.productInfo[i].price,
+              shippingCost,
+              all.productInfo[i].selectedColor,
+              all.productInfo[i].selectedSize
+              ).then(()=>{
+              that.navigation.navigate("Home");
+              alert("order placed");
+              that.deleteProduct();
+            })
+          }
         } else {
-          alert("Failed")
+          there.setState({
+            interupt: true,
+            loading: false,
+            errorCode: responseJson.code,
+            errorMessage: responseJson.raw.message
+          })
+          alert("Failed ")
         }
         resolve(responseJson)
       })
@@ -88,6 +110,9 @@ const subscribeUser = async (creditCardToken, all, that) => {
       });;
 
   });
+}catch(e){
+  alert("Something went wrong!")
+}
 };/**
  * The main class that submits the credit card data and
  * handles the response from Stripe.
@@ -103,14 +128,24 @@ class AddSubscription extends React.Component {
       error: null,
       totals: 0,
       all: {},
-      loading: false
+      loading: false,
+      shippingCost: 0,
+      interupt: false,
+      errorCode: '',
+      errorMessage: '',
     }
   }
 
   async componentDidMount() {
     const totals = await AsyncStorage.getItem("total");
+    console.log(totals)
     this.setState({
       totals
+    })
+    const ship = await AsyncStorage.getItem("shippingCost")
+    const shippingCost  = parseInt(ship);
+    this.setState({
+      shippingCost
     })
     // console.log(this.props)
     // const billingDetails = this.props.navigation.state.params
@@ -119,15 +154,18 @@ class AddSubscription extends React.Component {
   getData = (val) => {
     const storeId = [];
     const productInfo = [];
+    let productId;
+    // console.log("vall===-=.", val)
     for (let i = 0; i < val.length; i++) {
-      console.log('val==========> x', val[i].product.docData);
-      
+      // console.log('val==========> x', val[i].product.slectedSize);
+      productId =
       productInfo.push({
-        title: val[i].product.docData.allData.allData.allData.data.title,
-        image: val[i].product.docData.allData.callBack,
-        price: val[i].product.docData.allData.price,
+        productId:  val[i].product.docId,
         storeId: val[i].product.docData.uid,
-        salePrice: val[i].product.docData.allData.salePrice
+        salePrice: val[i].product.docData.allData.salePrice,
+        price: val[i].product.docData.allData.price,
+        selectedColor: val[i].product.selectedColor ? val[i].product.selectedColor : '',
+        selectedSize: val[i].product.slectedSize ? val[i].product.slectedSize : '',
       })
     }
     const billingDetails = this.props.navigation.state.params
@@ -137,6 +175,7 @@ class AddSubscription extends React.Component {
   // Handles submitting the payment request
   onSubmit = async (creditCardInput) => {
     this.setState({loading: true})
+    const {shippingCost} = this.state;
     const { navigation } = this.props;
     const { all } = this.state;
     // Disable the Submit button after the request is sent
@@ -157,19 +196,20 @@ class AddSubscription extends React.Component {
       return;
     }    // Send a request to your server with the received credit card token
     let that = this.props
-    const { error } = await subscribeUser(creditCardToken, all, that);
+    let there = this;
+    const { error } = await subscribeUser(creditCardToken, all, that,shippingCost, there);
     // Handle any errors from your server
     if (error) {
       this.setState({ submitted: false, error: SERVER_ERROR });
     } else {
       this.setState({ submitted: false, error: null });
-      navigation.navigate('Home')
+      // navigation.navigate('Home')
     }
   };
 
   // render the subscription view component and pass the props to it
   render() {
-    const { submitted, error, loading } = this.state;
+    const { submitted, error, loading,errorMessage, errorCode, interupt } = this.state;
     if(!loading){
       return (
         <AddSubscriptionView
@@ -178,6 +218,9 @@ class AddSubscription extends React.Component {
         onSubmit={this.onSubmit}
         navigate={this.props.navigation}
         sendData={this.getData}
+        interupt={interupt}
+        errorMessage={errorMessage}
+        errorCode={errorCode}
         />
         );
       }else{

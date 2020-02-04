@@ -22,10 +22,10 @@ export default class AddProductDetails extends React.Component {
         super();
         this.state = {
             content: '',
-            description: 'aaaaaaaaaaaaa',
-            title: 'aaaaaaaaaaaaaaaaaa',
-            isDescription: false,
-            isTitle: false,
+            description: '',
+            title: '',
+            isDescription: 'false',
+            isTitle: 'false',
             loading: false
         }
     }
@@ -48,9 +48,10 @@ export default class AddProductDetails extends React.Component {
         }
         if (description.length < '5') {
             this.setState({ isDescription: true })
-        }
-        if (isDescription === false && isTitle === false) {
-            this.props.navigation.navigate("AddImage", { title, description, catData });
+        }else{
+            if (isDescription === false && isTitle === false) {
+                this.props.navigation.navigate("AddImage", { title, description, catData });
+            }
         }
     }
 

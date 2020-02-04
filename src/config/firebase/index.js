@@ -3,14 +3,15 @@ import 'firebase/firestore'
 
 
   var firebaseConfig = {
-    apiKey: "AIzaSyB5LMX35h9k47VosBKpeqSZ0w_4ad3FKoE",
-    authDomain: "ecoommerce-ecb3d.firebaseapp.com",
-    databaseURL: "https://ecoommerce-ecb3d.firebaseio.com",
-    projectId: "ecoommerce-ecb3d",
-    storageBucket: "ecoommerce-ecb3d.appspot.com",
-    messagingSenderId: "849046057279",
-    appId: "1:849046057279:web:b070522e91fc4b024c238a",
-    measurementId: "G-X01M2NCTGL"
+    apiKey: "AIzaSyCQImoY0FVuWaRnhj4NxwkwGjqVoxG0IJc",
+    authDomain: "modeapp-72a71.firebaseapp.com",
+    databaseURL: "https://modeapp-72a71.firebaseio.com",
+    projectId: "modeapp-72a71",
+    storageBucket: "modeapp-72a71.appspot.com",
+    messagingSenderId: "52068144236",
+    appId: "1:52068144236:web:518709828948a83d1c3449",
+    measurementId: "G-T4GYXX9989"
+
   };
   // Initialize Firebase
   if (!firebase.apps.length) {

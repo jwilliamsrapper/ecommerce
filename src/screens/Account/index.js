@@ -15,7 +15,8 @@ export default class Account extends React.Component {
         this.state = {
             content: '',
             loading: true,
-            userName: ''
+            userName: '',
+            vendor: false
         }
     }
     async  componentDidMount() {
@@ -26,7 +27,8 @@ export default class Account extends React.Component {
             userName: res[0].docData.name,
             phone: res[0].docData.phone,
             docId: res[0].docId,
-            image: res[0].docData.picId
+            image: res[0].docData.picId,
+            vendor: res[0].docData.vendor
         },()=>{
             this.setState({loading: false})
         })
@@ -35,10 +37,10 @@ export default class Account extends React.Component {
         this.setState({loading: true})
         await AsyncStorage.removeItem("uid");
         await SignOut();
-        this.props.navigation.navigate("Login")
+        this.props.navigation.navigate("Auth")
     }
     render() {
-        const {loading, userName, image} = this.state;
+        const {loading, userName, image, vendor} = this.state;
 
         return (
 
@@ -81,6 +83,7 @@ export default class Account extends React.Component {
                     title="Log Out"
                     />
                 </TouchableOpacity>
+                
                 </View>}
             </ScrollView>
 

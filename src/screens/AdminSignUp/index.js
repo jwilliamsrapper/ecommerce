@@ -12,11 +12,11 @@ export default class Signup extends React.Component {
         super();
         this.state = {
             content: '',
-            confirmPassword: '12345678',
-            password: '12345678',
-            userName: 'abc',
-            email: 'abcaa@gmail.com',
-            phone: '123',
+            confirmPassword: '',
+            password: '',
+            userName: '',
+            email: '',
+            phone: '',
             isConfirmPassword: false,
             isPassword: false,
             isUserName: false,

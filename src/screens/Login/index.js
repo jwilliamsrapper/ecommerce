@@ -7,7 +7,7 @@ import {
     KeyboardAvoidingView,
     Text,
     Image,
-    AsyncStorage
+    AsyncStorage,
 } from "react-native";
 import styles from './style'
 import { Header } from 'react-navigation-stack';
@@ -16,14 +16,14 @@ import { checkAuth } from '../../config/firebase/Auth/signUpAuth'
 import { NavigationEvents } from "react-navigation";
 import AccountList from '../../components/AccountList/AccountList'
 import { getProfileData } from '../../config/firebase/Database/AuthDatabase'
-import  signout  from '../../config/firebase/Auth/SignOut'
+import signout from '../../config/firebase/Auth/SignOut'
 import { ScrollView } from "react-native-gesture-handler";
-
+import { Spinner, Content } from 'native-base';
 class Login extends React.Component {
     constructor() {
         super();
         this.state = {
-            name: 'arbaz',
+            name: '',
             loading: false,
             email: '',
             password: '',
@@ -31,19 +31,36 @@ class Login extends React.Component {
             image: false,
             userName: '',
             profile: [],
+            setting: true
         }
         this.mounted = true;
     }
 
     async componentDidMount() {
+
+        console.log(this.props.navigation.state.routeName)
         this.setState({ loading: true })
         checkAuth().then(async (res) => {
-            console.log(res)
             if (res) {
                 this.setState({ isLogin: true })
                 await AsyncStorage.setItem('uid', res);
+
                 getProfileData(res).then((res) => {
-                    console.log(res)
+                    console.log("auth data ::<<<===", res[0].docData.vendor)
+                    if (this.props.navigation.state.routeName !== "Setting") {
+                        this.setState({ setting: false })
+                        if (res[0].docData.status === true) {
+                            if (res[0].docData.vendor) {
+                                this.props.navigation.navigate("Vendor")
+                            } else {
+                                this.props.navigation.navigate("App")
+                            }
+                        } else {
+                            this.props.navigation.navigate("Disabled");
+                        }
+                    } else {
+                        this.setState({ setting: false })
+                    }
                     this.setState({ profile: res })
                 })
             } else {
@@ -57,7 +74,7 @@ class Login extends React.Component {
 
     }
     handleSubmitLogin = async () => {
-        this.setState({loading: true})
+        this.setState({ loading: true })
         const { email, password } = this.state;
         signInAuth(email, password).then((res) => {
             console.log(res)
@@ -69,7 +86,7 @@ class Login extends React.Component {
                 this.componentDidMount();
             } else {
                 alert(res)
-                this.setState({loading: false})
+                this.setState({ loading: false })
             }
         })
     }
@@ -82,77 +99,84 @@ class Login extends React.Component {
         this.setState({ loading: true, isLogin: false })
         await AsyncStorage.removeItem("uid");
         await signout();
+        this.props.navigation.navigate("Auth")
         this.componentDidMount();
     }
 
     render() {
 
-        const { loading, isLogin, image, userName, profile } = this.state
+        const { loading, isLogin, image, setting, profile } = this.state
         if (!isLogin) {
             return (
-                <KeyboardAvoidingView
-                    keyboardVerticalOffset={Header.HEIGHT + 25} // adjust the value here if you need
-                    behavior="padding"
-                    style={[styles.container,
-                    {
-                        backgroundColor: !isLogin ? 'black' : null,
-                        alignItems: isLogin ? 'flex-start' : 'center',
+                <ScrollView contentContainerStyle={{
+                    flex: 1, backgroundColor: !isLogin ? 'black' : null,
+                    width: '100%'
+                }}>
+                    <KeyboardAvoidingView
+                        keyboardVerticalOffset={Header.HEIGHT + 25} // adjust the value here if you need
+                        behavior="padding"
+                        style={[styles.container,
+                        {
+                            backgroundColor: !isLogin ? 'black' : null,
+                            alignItems: isLogin ? 'flex-start' : 'center',
 
-                    }]}>
-                    {!!loading && !isLogin && <View style={[styles.container, styles.horizontal]}>
-                        <ActivityIndicator size="large" color="#0000ff" />
-                        <Text>Login in...</Text>
-                    </View>}
-                    <NavigationEvents
-                        onWillFocus={() => {
-                            this.setState({ content: [] })
-                            this.componentDidMount()
-                        }}
-                    />
-                    {!!!loading && !isLogin && <View>
-                        <Image source={require('../../../assets/mainLogo.png')} style={styles.image} />
-                    </View>}
-                    {!!!loading && !isLogin && <View style={styles.loginTextView}>
-                        <Text style={styles.loginText}>Login</Text>
-                    </View>}
-                    {!!!loading && <View style={styles.textInputView}>
-                        <TextInput
-                            style={styles.textInput}
-                            underlineColorAndroid="transparent"
-                            placeholder="Email"
-                            placeholderTextColor="grey"
-                            autoCapitalize="none"
-                            onChangeText={(text) => this.setState({ email: text })}
+                        }]}>
+                        {!!loading && !isLogin && <View style={[styles.container, styles.horizontal]}>
+                            <ActivityIndicator size="large" color="#0000ff" />
+                            <Text>Login in...</Text>
+                        </View>}
+                        <NavigationEvents
+                            onWillFocus={() => {
+                                this.setState({ content: [] })
+                                this.componentDidMount()
+                            }}
                         />
-                        <TextInput
-                            style={styles.textInput}
-                            secureTextEntry={true}
-                            underlineColorAndroid="transparent"
-                            placeholder="Password"
-                            placeholderTextColor="grey"
-                            autoCapitalize="none"
-                            onChangeText={(text) => this.setState({ password: text })}
-                        />
-                    </View>}
+                        {!!!loading && !isLogin && <View>
+                            <Image source={require('../../../assets/mainLogo.png')} style={styles.image} />
+                            <Text style={[styles.loginText, {marginLeft: 10}]}>Login</Text>
+                        </View>}
+                        {!!!loading && !isLogin && <View style={styles.loginTextView}>
+                            
+                        </View>}
+                        {!!!loading && <View style={styles.textInputView}>
+                            <TextInput
+                                style={styles.textInput}
+                                underlineColorAndroid="transparent"
+                                placeholder="Email"
+                                placeholderTextColor="grey"
+                                autoCapitalize="none"
+                                onChangeText={(text) => this.setState({ email: text })}
+                            />
+                            <TextInput
+                                style={styles.textInput}
+                                secureTextEntry={true}
+                                underlineColorAndroid="transparent"
+                                placeholder="Password"
+                                placeholderTextColor="grey"
+                                autoCapitalize="none"
+                                onChangeText={(text) => this.setState({ password: text })}
+                            />
+                        </View>}
 
-                    {!!!loading && <TouchableOpacity style={styles.buttonView} onPress={this.handleSubmitLogin}>
-                        <Text style={styles.textColor} > Log in </Text>
-                    </TouchableOpacity>}
-                    {!!!loading && <View style={styles.signUpView}>
-                        <Text style={styles.signText}>
-                            First time here?
+                        {!!!loading && <TouchableOpacity style={styles.buttonView} onPress={this.handleSubmitLogin}>
+                            <Text style={styles.textColor} > Log in </Text>
+                        </TouchableOpacity>}
+                        {!!!loading && <View style={styles.signUpView}>
+                            <Text style={styles.signText}>
+                                First time here?
           </Text>
-                        <TouchableOpacity
-                            onPress={() => this.props.navigation.navigate('SignUp')}
-                            style={styles.signupButton}>
-                            <Text style={styles.textColor}>Sign up.</Text>
-                        </TouchableOpacity>
-                    </View>}
+                            <TouchableOpacity
+                                onPress={() => this.props.navigation.navigate('SignUp')}
+                                style={styles.signupButton}>
+                                <Text style={styles.textColor}>Sign up.</Text>
+                            </TouchableOpacity>
+                        </View>}
 
 
-                </KeyboardAvoidingView>
+                    </KeyboardAvoidingView>
+                </ScrollView>
             );
-        } else {
+        } else if (isLogin && !setting) {
             return (
                 <ScrollView>
 
@@ -175,13 +199,33 @@ class Login extends React.Component {
                             </TouchableOpacity>
                         </View>
                     </View>}
+                    {!!profile.length && profile[0].docData.vendor && <TouchableOpacity style={[styles.listContainer]} onPress={() => { this.props.navigation.navigate("Admin") }}>
+                        <AccountList
+                            iconName="switch"
+                            title="Switch to selling"
+                        />
+
+                    </TouchableOpacity>}
+                    <TouchableOpacity style={[styles.listContainer,]} onPress={() => { this.props.navigation.navigate("Terms") }}>
+                        <AccountList
+                            iconName="book-open-variant"
+                            title="Terms & conditions"
+                        />
+                    </TouchableOpacity>
                     <TouchableOpacity style={styles.listContainer} onPress={this.handleLogOutPress}>
                         <AccountList
                             iconName="door"
                             title="Log Out"
                         />
                     </TouchableOpacity>
+
                 </ScrollView>
+            )
+        } else {
+            return (
+                <View>
+                    <Spinner color='black' />
+                </View>
             )
         }
     }

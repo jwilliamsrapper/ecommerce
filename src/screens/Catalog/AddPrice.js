@@ -57,6 +57,7 @@ export default class AddPrice extends React.Component {
             if (i === images.length) {
                 const all = { allData, price, salePrice, callBack, status: 'pending' }
                 const category = allData.allData.data.catData.text
+                console.log('cqat ====> ', category)
                 await saveProduct(all, uid, category).then(async (res) => {
                     console.log(res)
                     if (res === "sucess") {

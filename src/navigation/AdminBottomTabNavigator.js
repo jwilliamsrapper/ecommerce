@@ -12,9 +12,9 @@ import Catalog from '../screens/Catalog/index'
 export default createBottomTabNavigator(
     {
       Home: Home,
+      // Design: Design,
+      Catalog: Catalog,
       Account: Account,
-      Design: Design,
-      Catalog: Catalog
     },
     {
       defaultNavigationOptions: ({ navigation }) => ({
@@ -31,12 +31,13 @@ export default createBottomTabNavigator(
             // You can check the implementation below.
           } 
         
-          else if(routeName === 'Design'){
-            return(
-              focused ? <Ionicons name='ios-analytics' size={30} color={tintColor}/> :
-              <Ionicons name='ios-analytics' size={28} color={tintColor}/>
-            )
-          }else if(routeName === 'Catalog'){
+          // else if(routeName === 'Design'){
+          //   return(
+          //     focused ? <Ionicons name='ios-analytics' size={30} color={tintColor}/> :
+          //     <Ionicons name='ios-analytics' size={28} color={tintColor}/>
+          //   )
+          // }
+          else if(routeName === 'Catalog'){
             return(
               focused ? <Ionicons name='ios-images' size={30} color={tintColor}/> :
               <Ionicons name='ios-images' size={28} color={tintColor}/>
@@ -44,8 +45,8 @@ export default createBottomTabNavigator(
           }
             else if (routeName === 'Account') {
             return(
-            focused ? <Ionicons name='ios-pricetags' size={30} color={tintColor} /> :
-            <Ionicons name='ios-pricetags' size={28} color={tintColor} />
+            focused ? <Ionicons name='ios-more' size={30} color={tintColor} /> :
+            <Ionicons name='ios-more' size={28} color={tintColor} />
             )
           }
 

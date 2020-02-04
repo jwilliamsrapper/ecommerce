@@ -9,7 +9,8 @@ import {
     KeyboardAvoidingView,
     Image,
     AsyncStorage,
-    ActivityIndicator
+    ActivityIndicator,
+    BackHandler
 } from 'react-native'
 import Styles from './style'
 import Input from '../../components/Input/Input';
@@ -31,7 +32,18 @@ export default class AdminLogin extends React.Component {
             loading: false
         }
     }
+    componentWillUnmount() {
+        BackHandler.removeEventListener(
+          'hardwareBackPress',
+          this.handleBackButtonPressAndroid
+        );
+      }
+
     async componentDidMount() {
+        BackHandler.addEventListener(
+            'hardwareBackPress',
+            this.handleBackButtonPressAndroid
+          );
         this.setState({loading: true})
         const authRes = await checkAuth();
         console.log(authRes)
@@ -74,7 +86,7 @@ export default class AdminLogin extends React.Component {
                 this.setState({ loading: true })
                 const authRes = await checkAuth();
                 await AsyncStorage.setItem('uid', authRes);
-                this.props.navigation.navigate("Home");
+                this.props.navigation.navigate("Admin");
             }
         }
     }
@@ -83,7 +95,11 @@ export default class AdminLogin extends React.Component {
         const res = await facebookSignin();
         console.log(res);
     }
-
+    handleBackButtonPressAndroid = () => {
+        console.log("back pressed")
+        this.props.navigation.navigate("Home");
+    return true;
+      };
     render() {
         const {
             isPassword,

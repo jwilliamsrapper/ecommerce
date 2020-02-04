@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { View, AsyncStorage, KeyboardAvoidingView, ActivityIndicator} from 'react-native'
-import { getBillInfo } from '../../config/firebase/Database/GetData'
+import { getBillInfo,getShipingCost } from '../../config/firebase/Database/GetData'
 import { Container, Header, Content, Form, Item, Input, Label, Button, Text } from 'native-base';
 
 class index extends Component {
@@ -28,6 +28,9 @@ class index extends Component {
             zipcode: res.data.zipcode,
             loading: false
         })
+        const ship = await getShipingCost();
+        console.log("ship" , ship)
+        await AsyncStorage.setItem("shippingCost", ship.toString())
     }
 
     handleConfirm= ()=>{

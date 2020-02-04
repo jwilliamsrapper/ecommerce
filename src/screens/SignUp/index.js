@@ -1,9 +1,10 @@
 import React from 'react';
-import { Text, View, TouchableOpacity, TextInput, ScrollView, Image, KeyboardAvoidingView, ActivityIndicator, Alert} from 'react-native';
+import { Text, View, TouchableOpacity, TextInput, ScrollView, Image, KeyboardAvoidingView, ActivityIndicator, Alert } from 'react-native';
 import { signUp } from '../../config/firebase/Auth/signUpAuth'
 import styles from './style'
 import { checkAuth } from '../../config/firebase/Auth/signUpAuth'
 import { saveUsers } from '../../config/firebase/Database/AuthDatabase'
+import { CheckBox } from 'react-native-elements'
 
 export default class Login extends React.Component {
 
@@ -19,50 +20,51 @@ export default class Login extends React.Component {
       password: "",
       bloodGroup: "please select",
       isReady: false,
-      loading: false
+      loading: false,
+      checked: false
     }
   }
   async componentDidMount() {
     this._isMounted = true;
-    
+
   }
 
 
 
   handleSubmitSignUp = async () => {
-    this.setState({loading: true})   
-    const {email ,password, lastName} = this.state;
+    this.setState({ loading: true })
+    const { email, password, lastName, checked } = this.state;
     const phone = '';
-    signUp(email,password).then((res)=>{
-      console.log('signup is==',res)
-      if(res === 'false'){
+    signUp(email, password).then((res) => {
+      console.log('signup is==', res)
+      if (res === 'false') {
         console.log("1st condition match")
-        checkAuth().then((res)=>{
-          console.log('check auth==',res)
-          if(res !== false){
+        checkAuth().then((res) => {
+          console.log('check auth==', res)
+          if (res !== false) {
             console.log("third confitio")
-            saveUsers(lastName, email, phone, res).then((res)=>{
+            saveUsers(lastName, email, phone, res, checked).then((res) => {
               console.log("checking for third conditions")
-              if(res === "sucess"){
+              if (res === "sucess") {
                 console.log("last contdition")
                 alert("Your account is registered");
-                this.setState({loading: false})
-                this.props.navigation.goBack();
+                this.setState({ loading: false })
+                this.props.navigation.navigate("Load");
               }
             })
           }
         })
-      }else{
-        this.setState({loading: false})
+      } else {
+        this.setState({ loading: false })
         alert(res)
       }
     })
   }
-  componentWillUnmount(){
+  componentWillUnmount() {
     this._isMounted = false;
   }
 
-  
+
 
   render() {
     const { email, password, firstName, lastName, loading } = this.state
@@ -79,7 +81,7 @@ export default class Login extends React.Component {
           <Text style={styles.loginText}>New Account</Text>
         </View>}
         {!!!loading && <View style={styles.textInputView}>
-         
+
           <TextInput
             style={styles.textInput}
             underlineColorAndroid="transparent"
@@ -108,14 +110,23 @@ export default class Login extends React.Component {
             onChangeText={(text) => this.setState({ password: text })}
             value={this.state.password}
           />
-        
+          <Text style={styles.qText}>Are you a vendor?</Text>
+          <CheckBox
+            center
+            title='Yes'
+            checkedIcon='dot-circle-o'
+            uncheckedIcon='circle-o'
+            checked={this.state.checked}
+            onPress={() => this.setState({checked: !this.state.checked})}
+            containerStyle={{backgroundColor: 'black'}}
+          />
         </View>}
 
-       {!!!loading && <TouchableOpacity style={styles.buttonView} 
-       onPress={this.handleSubmitSignUp}>
+        {!!!loading && <TouchableOpacity style={styles.buttonView}
+          onPress={this.handleSubmitSignUp}>
           <Text style={styles.textColor} > Register </Text>
         </TouchableOpacity>}
-        {!!!loading &&  <View style={styles.signUpView}>
+        {!!!loading && <View style={styles.signUpView}>
           <Text style={styles.signText}>
             Not the first time?
           </Text>

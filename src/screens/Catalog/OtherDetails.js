@@ -27,13 +27,16 @@ export default class OtherDetails extends React.Component {
             isQuantity: false,
             size: '',
             weight: '',
-            color: ''
+            color: '',
+            allColors: [],
+            description: "",
+            allSizes: []
         }
     }
     async componentDidMount() {
         this.getPermissionAsync();
         const allData = this.props.navigation.state.params;
-        this.setState({allData})
+        this.setState({ allData })
 
     }
     getPermissionAsync = async () => {
@@ -47,31 +50,46 @@ export default class OtherDetails extends React.Component {
     }
 
     handlePress = async () => {
-        const { quantity, size, weight, color,allData } = this.state;
+        const { quantity, size, weight, color, allData, allSizes, allColors } = this.state;
         if (quantity === '') {
             console.log('==== img ===> ')
-            
-            this.setState({isQuantity: true})
+
+            this.setState({ isQuantity: true })
         } else {
-            this.props.navigation.navigate("AddPrice", { OtherDetails: {quantity,size,weight,color}, allData })
+            this.props.navigation.navigate("AddPrice", { OtherDetails: { quantity, size, weight, color, allSizes, allColors }, allData })
+        }
+    }
+    handleColor = () => {
+        if (this.state.description === "") {
+            alert("Field cannot be empty!")
+        } else {
+            this.setState({ allColors: [...this.state.allColors, this.state.description] })
+            this.setState({ description: '' })
+        }
+    }
+    handleSize = () => {
+        if (this.state.size === "") {
+            alert("Field cannot be empty!")
+        } else {
+            this.setState({ allSizes: [...this.state.allSizes, this.state.size] })
+            this.setState({ size: '' })
         }
     }
 
-
     render() {
-        const { isQuantity, isColor } = this.state;
+        const { isQuantity, allColors, allSizes } = this.state;
         console.log(isQuantity)
         return (
-            <SafeAreaView style={{ flex: 1 }}>
-                 <KeyboardAvoidingView
-                style={Styles.container}
-                behavior="padding"
-                enabled
-                keyboardVerticalOffset={Header.HEIGHT + 55} // adjust the value here if you need more padding
-            >
-                <ScrollView style={{ flex: 1 }}>
+            <SafeAreaView style={{ flex: 1 }} keyboardShouldPersistTaps="always" >
+                <KeyboardAvoidingView
+                    style={Styles.container}
+                    behavior="padding"
+                    enabled
+                    keyboardVerticalOffset={Header.HEIGHT + 55} // adjust the value here if you need more padding
+                >
+                    <ScrollView style={{ flex: 1 }}>
 
-                <View style={Styles.inputContainer}>
+                        <View style={Styles.inputContainer}>
                             <Text style={Styles.titleTextDetails}>*Quantity</Text>
                             <Input
                                 placeholder="e.g 50"
@@ -85,14 +103,30 @@ export default class OtherDetails extends React.Component {
 
                         <View style={Styles.inputContainer}>
                             <Text style={Styles.titleTextDetails}>Color</Text>
-                            <Input
-                                placeholder="e.g green, yellow..."
-                                onChangeText={(e) => { this.setState({ description: e }) }}
-                                // errorMessage={isColor ? "more then five letter needed" : null}
-                                onFocus={() => { this.setState({ color: false }) }}
-                                style={{ textAlignVertical: 'top' }}
-                                multiline={true}
-                            />
+                            <View style={{ flexDirection: 'column' }}>
+                                <Input
+                                    placeholder="e.g green..."
+                                    onChangeText={(e) => { this.setState({ description: e }) }}
+                                    // errorMessage={isColor ? "more then five letter needed" : null}
+                                    onFocus={() => { this.setState({ color: false }) }}
+                                    style={{ textAlignVertical: 'top' }}
+                                    multiline={true}
+                                    value={this.state.description}
+
+                                />
+                                <TouchableOpacity style={Styles.addButton} onPress={this.handleColor}>
+                                    <Text style={Styles.addButtonText}>ADD</Text>
+                                </TouchableOpacity>
+                            </View>
+                            <View style={Styles.row}>
+                                {!!allColors.length && allColors.map((e, i) => {
+                                    return (
+                                        <View style={Styles.addedColor} key={i}>
+                                            <Text>{e}</Text>
+                                        </View>
+                                    )
+                                })}
+                            </View>
                         </View>
 
                         <View style={Styles.inputContainer}>
@@ -101,10 +135,23 @@ export default class OtherDetails extends React.Component {
                                 placeholder="e.g 20 ..."
                                 onChangeText={(e) => { this.setState({ size: e }) }}
                                 // errorMessage={isColor ? "more then five letter needed" : null}
-                                onFocus={() => { this.setState({ size: false }) }}
+                                onFocus={() => { this.setState({ size: '' }) }}
                                 style={{ textAlignVertical: 'top' }}
                                 multiline={true}
+                                value={this.state.size}
                             />
+                            <TouchableOpacity style={Styles.addButton} onPress={this.handleSize}>
+                                <Text style={Styles.addButtonText}>ADD</Text>
+                            </TouchableOpacity>
+                            <View style={Styles.row}>
+                                {!!allSizes.length && allSizes.map((e, i) => {
+                                    return (
+                                        <View style={Styles.addedColor} key={i*Math.random()*33}>
+                                            <Text>{e}</Text>
+                                        </View>
+                                    )
+                                })}
+                            </View>
                         </View>
                         <View style={Styles.inputContainer}>
                             <Text style={Styles.titleTextDetails}>Weight</Text>
@@ -117,8 +164,8 @@ export default class OtherDetails extends React.Component {
                                 multiline={true}
                             />
                         </View>
-                </ScrollView>
-                        </KeyboardAvoidingView>
+                    </ScrollView>
+                </KeyboardAvoidingView>
                 <TouchableOpacity
                     style={{
                         justifyContent: 'center',
@@ -138,7 +185,7 @@ export default class OtherDetails extends React.Component {
                         }}
                     >Next</Text>
                 </TouchableOpacity>
-              
+
             </SafeAreaView>
 
         )

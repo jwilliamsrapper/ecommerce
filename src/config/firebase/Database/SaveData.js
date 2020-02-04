@@ -14,6 +14,21 @@ const db = firebase.firestore();
 
 
 
+
+const saveEditUserData = async (name, phone, docId, picId) => {
+    return new Promise(async (resolve, reject) => {
+        await db.collection("users").doc(docId).update({
+            name,
+            phone,
+            picId
+        }).then(() => {
+            resolve("sucess");
+        }).catch((err) => {
+            console.log(err)
+        })
+    })
+}
+
 const saveBillingInfo = async (state, city, zipcode, address, uid) => {
     let docId;
     return new Promise(async (resolve, reject) => {
@@ -86,11 +101,12 @@ const saveInfoCategory = async (image, uid, text) => {
     })
 }
 
-const saveProduct = async (allData, uid) => {
+const saveProduct = async (allData, uid, category) => {
     return new Promise(async (resolve, reject) => {
         await db.collection("product").add({
             allData,
-            uid
+            uid,
+            category
         }).then(() => {
             resolve("sucess");
         }).catch((err) => {
@@ -99,13 +115,19 @@ const saveProduct = async (allData, uid) => {
     })
 }
 
-const saveOrderInfo = async (uid,order,price)=>{
+const saveOrderInfo = async (uid, billingDetails, productId, storeId, salePrice, price, shippingCost, selectedColor, selectedSize) => {
     return new Promise(async (resolve, reject) => {
         await db.collection("orders").add({
-            uid,
-            order,
+            buyer: uid,
+            billingDetails,
+            productId,
+            storeId,
+            salePrice,
             price,
             createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+            shippingCost,
+            selectedColor,
+            selectedSize
         }).then(() => {
             resolve("sucess");
         }).catch((err) => {
@@ -113,6 +135,46 @@ const saveOrderInfo = async (uid,order,price)=>{
         })
     })
 }
+
+const changeStatus = async (id) => {
+    if (id) {
+        await db.collection("orders").doc(id).update({
+            status: "shiped"
+        }).then(() => {
+            console.log("success")
+        }).catch((err) => {
+            console.log(err)
+        })
+    }
+}
+
+
+const savePushToken = async (token) => {
+    let tokens;
+    await db.collection("tokens").where("token", "==", token).get().then(function (querySnapshot) {
+        querySnapshot.forEach(function (doc) {
+            // doc.data() is never undefined for query doc snapshots
+            // console.log(doc.data())
+            tokens = doc.data().token;
+        });
+    });
+    console.log("checking token ==",tokens)
+    if(!tokens){
+        console.log("sending data")
+        return new Promise(async (resolve, reject) => {
+            await db.collection("tokens").add({
+                token
+            }).then(() => {
+                resolve("sucess");
+            }).catch((err) => {
+                console.log(err)
+            })
+        })
+    }else{
+        console.log("not sending data")
+    }
+}
+
 
 export {
     saveBillingInfo,
@@ -120,5 +182,8 @@ export {
     saveDiscountOffer,
     saveInfoCategory,
     saveProduct,
-    saveOrderInfo
+    saveOrderInfo,
+    changeStatus,
+    saveEditUserData,
+    savePushToken
 }

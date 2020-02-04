@@ -18,12 +18,12 @@ class AdminHeader extends React.Component {
         return (
             <SafeAreaView style={Styles.container}>
                 <TouchableOpacity style={Styles.ham} >
-                    <Icon name="bell" color={`${headerHam}`} size={22} />
+                    {/* <Icon name="bell" color={`${headerHam}`} size={22} /> */}
                 </TouchableOpacity>
                 <View>
                     <Text style={Styles.logo}>Admin</Text>
                 </View>
-                <TouchableOpacity style={Styles.ham} >
+                <TouchableOpacity style={Styles.ham} onPress={()=>{this.props.navigation.navigate("EditProfile")}} >
                     <MaterialCommunityIcons name="account-circle" color={`${headerHam}`} size={25} />
                 </TouchableOpacity>
             </SafeAreaView>

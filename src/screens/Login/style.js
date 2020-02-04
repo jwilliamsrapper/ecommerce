@@ -53,7 +53,7 @@ const styles = StyleSheet.create({
     },
     image:{
       width: 100,
-      height: 100
+      height: 100,
     },
     pickerContainer:{
       width: '100%',
@@ -92,7 +92,7 @@ const styles = StyleSheet.create({
   },
   listContainer:{
       marginTop: 10,
-      height: 80,
+      height: 50,
   }
 
   });

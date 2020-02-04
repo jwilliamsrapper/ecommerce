@@ -98,9 +98,9 @@ export default class CategoryPage extends React.Component {
         const { categoryName, content, loading } = this.state;
         return (
             <View style={{ flex: 1, backgroundColor: '#F6F6F6', width: '100%' }}>
-                <Header style={Styles.headings}>
+                {/* <Header style={Styles.headings}>
                     <Text style={Styles.text}>{categoryName}</Text>
-                </Header>
+                </Header> */}
                 {!loading && <Spinner color='black' />}
                {!!loading &&  <View style={{ padding: 4 }}>
                     <FlatList
@@ -115,6 +115,12 @@ export default class CategoryPage extends React.Component {
                 <View
                     style={{paddingBottom: 20}}
                 />
+               {!!loading && !content.length && <Text style={{
+                   justifyContent: 'center',
+                   alignContent: 'center',
+                   alignSelf: 'center',
+                   color: 'grey'
+               }}>Nothing to show here!</Text>}
             </View>
         );
     }

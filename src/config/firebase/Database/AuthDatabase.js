@@ -1,6 +1,6 @@
 import firebase from '../index';
 import React from 'react';
-import {AsyncStorage} from 'react-native';
+import { AsyncStorage } from 'react-native';
 import { YellowBox } from 'react-native';
 import _ from 'lodash';
 
@@ -16,29 +16,31 @@ const db = firebase.firestore();
 
 
 
-const saveUsers = async(name, email,phone, uid)=>{
-    return new Promise(async(resolve,reject)=>{
+const saveUsers = async (name, email, phone, uid, checked) => {
+    return new Promise(async (resolve, reject) => {
         await db.collection("users").add({
-            name, 
+            name,
             email,
             phone,
-            uid
-        }).then(()=>{
+            uid,
+            status: true,
+            vendor: checked
+        }).then(() => {
             resolve("sucess");
-        }).catch((err)=>{
+        }).catch((err) => {
             console.log(err)
         })
     })
 }
 
 
-const getProfileData = async(uid)=>{
+const getProfileData = async (uid) => {
     let docId;
     let docData
     let abc = [];
-    return new Promise(async(res)=>{
-        await db.collection("users").where("uid", "==", uid).get().then((snap)=>{
-            snap.forEach((data)=>{
+    return new Promise(async (res) => {
+        await db.collection("users").where("uid", "==", uid).get().then((snap) => {
+            snap.forEach((data) => {
                 docId = data.id;
                 docData = data.data();
                 abc.push({ docId, docData });
