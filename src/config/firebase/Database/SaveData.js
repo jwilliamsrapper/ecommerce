@@ -101,12 +101,15 @@ const saveInfoCategory = async (image, uid, text) => {
     })
 }
 
-const saveProduct = async (allData, uid, category) => {
+const saveProduct = async (allData, uid, category,title, search ) => {
     return new Promise(async (resolve, reject) => {
         await db.collection("product").add({
             allData,
             uid,
-            category
+            category,
+            title,
+            search,
+            ver: '2.4'
         }).then(() => {
             resolve("sucess");
         }).catch((err) => {

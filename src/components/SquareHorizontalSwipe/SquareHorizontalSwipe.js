@@ -17,9 +17,9 @@ export default class SquareHorizontalSwipe extends React.Component {
                     style={Styles.square}
                     source={this.props.image}
                 >
-                    <View style={this.props.center ? Styles.catContainer: Styles.BottomCatContainer}>
+                    {!!this.props.dealName && <View style={this.props.center ? Styles.catContainer: Styles.BottomCatContainer}>
                         <Text style={Styles.catName}>{this.props.dealName}</Text>
-                    </View>
+                    </View>}
                 </ImageBackground>
             </View>
         )

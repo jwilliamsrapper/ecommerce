@@ -8,7 +8,8 @@ import { deleteProduct } from '../../store/action'
 
 const STRIPE_ERROR = 'Payment service error. Try again later.';
 const SERVER_ERROR = 'Server error. Try again later.';
-const STRIPE_PUBLISHABLE_KEY = 'pk_test_DwUkdRiV6FqXgAtkHAHBmXWX00QCxSPxTY';/**
+const STRIPE_PUBLISHABLE_KEY = 'pk_live_nOI5hkhG6FFzjhRiC88zLwQb00jLCgaPzf';
+/**
  * The method sends HTTP requests to the Stripe API.
  * It's necessary to manually send the payment data
  * to Stripe because using Stripe Elements in React 
@@ -56,8 +57,9 @@ const subscribeUser = async (creditCardToken, all, that,shippingCost, there) => 
   try{
 
   
-  // console.log(all)
+  console.log("initiating stripe request")
   return new Promise(async (resolve) => {
+    console.log("making request")
     console.log('Credit card token\n', creditCardToken.id);
     fetch('https://shrouded-island-13989.herokuapp.com/', {
       method: 'POST',
@@ -72,10 +74,11 @@ const subscribeUser = async (creditCardToken, all, that,shippingCost, there) => 
       }),
     })
     // .then(async(response) => {console.log(await response.json())})
-      .then(async (response) => response.json())
-      .then(async (responseJson) => {
-        console.log(responseJson);
-        if (responseJson.paid === true) {
+    .then(async (response) => response.json())
+    .then(async (responseJson) => {
+      console.log("response")
+      console.log(responseJson);
+      if (responseJson.paid === true) {
           const uid = await AsyncStorage.getItem("uid");
           for(let i =0; i<all.productInfo.length; i++){
             await saveOrderInfo(

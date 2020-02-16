@@ -108,12 +108,13 @@ export default class Home extends React.Component {
                     </View>
 
                     {/* banner end */}
-                    {/* other square swipeable second banner */}
+                    {/* other square swipeable third banner */}
                     <View style={Styles.horizontalSwipeContainer} >
                         <ScrollView style={Styles.swipeCategory} horizontal={true} showsHorizontalScrollIndicator={false}>
                             <View style={Styles.square2}>
                                 {!!categories.length && categories.map((item, i) => {
                                     // console.log(item.docId)
+                                   
                                     return (
                                         <TouchableOpacity
                                             onPress={() => { this.props.navigation.navigate("CategoryPage", { docData: item.docData }) }}

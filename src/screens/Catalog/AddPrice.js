@@ -27,19 +27,51 @@ export default class AddPrice extends React.Component {
             quantity: '',
             isPrice: false,
             price: '',
-            salePrice: ''
+            salePrice: '',
+            title: '',
+            search: ''
         }
     }
 
     componentDidMount() {
         const allData = this.props.navigation.state.params;
-        this.setState({ allData, images: allData.allData.productImage })
+        // console.log("data from all data =-=-=-=-=?>",allData.allData.data.title)
+        const title = allData.allData.data.title;
+        this.setState({ 
+            allData, 
+            images: allData.allData.productImage,
+            title, 
+        })
+        const verb = title.trim().split(/\s+/);
+        const arr = [''];
+        let curName = '';
+        let othercurName = '';
+
+        for (let i = 0; i<verb.length; i++){
+            verb[i].split('').forEach(word => {
+                othercurName += word;
+                arr.push(othercurName.toLowerCase());
+            })
+            othercurName = '';
+        }
+        
+        title.split('').forEach(element => {
+                curName += element;
+                arr.push(curName.toLowerCase());
+            })
+        console.log(arr)
+
+        this.setState({search: arr})
+
         // console.log(allData.allData.productImage)
     }
 
     handlePress = async () => {
-        const { price, salePrice, allData, images } = this.state;
+        const { price, salePrice, allData, images,search, title } = this.state;
         let callBack = []
+
+        // console.log(/\d/.test(price))
+
         if (price === '') {
             console.log('==== img ===> ')
 
@@ -57,9 +89,9 @@ export default class AddPrice extends React.Component {
             if (i === images.length) {
                 const all = { allData, price, salePrice, callBack, status: 'pending' }
                 const category = allData.allData.data.catData.text
-                console.log('cqat ====> ', category)
-                await saveProduct(all, uid, category).then(async (res) => {
-                    console.log(res)
+                // console.log('cqat ====> ', category)
+                await saveProduct(all, uid, category, title, search).then(async (res) => {
+                    // console.log(res)
                     if (res === "sucess") {
                         this.setState({ loading: false })
                         alert("Your product is added")
@@ -71,6 +103,7 @@ export default class AddPrice extends React.Component {
             }
 
         }
+
         // console.log(this.props.navigation.state);
     }
 

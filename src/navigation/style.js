@@ -5,7 +5,7 @@ import {logoColor, logoSize,logoWeigth} from '../config/themeColors'
 const Styles = StyleSheet.create({
     container: {
       flex: 1,
-      height: '20%',
+      height: '100%',
       alignContent: 'center',
       alignItems: 'center',
       backgroundColor: header,
