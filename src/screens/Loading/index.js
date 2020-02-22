@@ -61,7 +61,7 @@ export default class Loading extends React.Component {
 
                 } else {
                     console.log("Authx  ")
-                    this.props.navigation.navigate("Auth");
+                    this.props.navigation.navigate("App");
                 }
             })
 

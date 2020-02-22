@@ -46,7 +46,7 @@ class ProductPage extends React.Component {
       quantity: this.props.navigation.state.params.product.docData.allData.allData.OtherDetails.quantity,
       size: this.props.navigation.state.params.product.docData.allData.allData.OtherDetails.size,
       weight: this.props.navigation.state.params.product.docData.allData.allData.OtherDetails.weight,
-      name: this.props.navigation.state.params.product.docData.allData.allData.allData.data.catData.text,
+      name: this.props.navigation.state.params.product.docData.allData.allData.allData.data.title,
       des: this.props.navigation.state.params.product.docData.allData.allData.allData.data.description,
       docId: this.props.navigation.state.params.product.docId,
       allColors: this.props.navigation.state.params.product.docData.allData.allData.OtherDetails.allColors,
@@ -92,6 +92,7 @@ class ProductPage extends React.Component {
 
   componentWillUnmount() {
     this.setState({ loading: false })
+    // console.log(this.state.name)
   }
 
   handleAddToCart = () => {

@@ -177,6 +177,7 @@ class AddSubscription extends React.Component {
   }
   // Handles submitting the payment request
   onSubmit = async (creditCardInput) => {
+    console.log("main func started")
     this.setState({loading: true})
     const {shippingCost} = this.state;
     const { navigation } = this.props;
@@ -189,13 +190,16 @@ class AddSubscription extends React.Component {
       if (creditCardToken.error) {
         // Reset the state if Stripe responds with an error
         // Set submitted to false to let the user subscribe again
-        this.setState({ submitted: false, error: STRIPE_ERROR });
+        this.setState({ submitted: false, error: STRIPE_ERROR, loading: false });
+        console.log("error is card ", creditCardToken.error.code)
+        this.setState({errorCode: creditCardToken.error.code, errorMessage: creditCardToken.error.message })
         return;
       }
     } catch (e) {
       // Reset the state if the request was sent with an error
       // Set submitted to false to let the user subscribe again
       this.setState({ submitted: false, error: STRIPE_ERROR });
+      console.log('error in catch', e)
       return;
     }    // Send a request to your server with the received credit card token
     let that = this.props

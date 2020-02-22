@@ -95,7 +95,7 @@ function Swiper({categories,  props}){
           <TouchableOpacity style={{ paddingRight: 10 }}
             onPress={() => { props.navigation.navigate("CategoryPage", { docData: item.docData }) }}
             key={item.docId}>
-            <HorizontalSwipe catText={item.docData.text} iamge={item.docData.image} />
+            <HorizontalSwipe catText={item.docData.text } iamge={item.docData.image} />
             <View style={Styles.swipeSetting} />
           </TouchableOpacity>
         )

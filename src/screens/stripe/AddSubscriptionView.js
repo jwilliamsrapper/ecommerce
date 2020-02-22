@@ -131,8 +131,8 @@ class AddSubscriptionView extends React.Component {
                   <Left>
                     <Body>
                       <Text style={{ fontSize: 18 }}>Shipping Address</Text>
-                      <Text note>{this.props.navigate.state.params.address}, 
-                          {this.props.navigate.state.params.city}, 
+                      <Text note>{this.props.navigate.state.params.address},
+                          {this.props.navigate.state.params.city},
                          {this.props.navigate.state.params.state}
                       </Text>
                     </Body>
@@ -141,11 +141,11 @@ class AddSubscriptionView extends React.Component {
               </Card>
               {/* error card */}
               {!!this.props.interupt && <Card style={{ flex: 0 }}>
-                <CardItem style={{ backgroundColor: 'rgba(255, 0, 0, 0.6)'}}>
+                <CardItem style={{ backgroundColor: 'rgba(255, 0, 0, 0.6)' }}>
                   <Left>
                     <Body>
-            <Text style={{ fontSize: 18, color: 'white' }}>Error: {this.props.errorCode}</Text>
-            <Text note style={{color: 'white'}}>{this.props.errorMessage}</Text>
+                      <Text style={{ fontSize: 18, color: 'white' }}>Error: {this.props.errorCode}</Text>
+                      <Text note style={{ color: 'white' }}>{this.props.errorMessage}</Text>
                     </Body>
                   </Left>
                 </CardItem>
