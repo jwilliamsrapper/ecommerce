@@ -16,13 +16,13 @@ export default class ProductBox extends React.Component {
        
        <Image
           style={Styles.box}
-          source={require('../../../assets/iphone.png')}
+         
         />
         
         <View style={Styles.seprator}/>
         <Image
           style={Styles.box}
-          source={require('../../../assets/iphone.png')}
+         
         />
       </View>
     )

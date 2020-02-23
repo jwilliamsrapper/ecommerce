@@ -1,7 +1,6 @@
 import React from 'react';
 import Carousel from 'react-native-banner-carousel';
 import { StyleSheet, Image, View, Dimensions } from 'react-native';
-import banner from '../../../assets/banner.png'
 import { HomeBannerHeight,HomeBannerTimeOut } from '../../config/themeColors'
 const BannerWidth = Dimensions.get('window').width;
 const BannerHeight = HomeBannerHeight;

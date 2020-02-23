@@ -6,7 +6,7 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 // import Product from '../screens/Product/index'
 import Home from '../screens/AdminHome/index'
 import Account from '../screens/AdminAccount/index'
-import Design from '../screens/Design/index'
+// import Design from '../screens/Design/index'
 import Catalog from '../screens/Catalog/index'
 
 export default createBottomTabNavigator(

@@ -23,8 +23,7 @@ export default class Design extends React.Component {
                 </View>
 
                 <Card
-                    title='Home Page Top Banner'
-                    image={require('../../../assets/images/bannerMain.png')}>
+                    title='Home Page Top Banner'>
                     {/* <Text style={{ marginBottom: 10 }}>
                         The idea with React Native Elements is more about component structure than actual design.
                      </Text> */}
@@ -35,8 +34,7 @@ export default class Design extends React.Component {
                         title='Add or Edit'/>
                 </Card>
                 <Card
-                    title='Discounts'
-                    image={require('../../../assets/images/dealMain.png')}>
+                    title='Discounts'>
                     {/* <Text style={{ marginBottom: 10 }}>
                         The idea with React Native Elements is more about component structure than actual design.
                      </Text> */}
@@ -47,8 +45,7 @@ export default class Design extends React.Component {
                         title='Add or Edit'/>
                 </Card>
                 <Card
-                    title='Category'
-                    image={require('../../../assets/images/categoryMain.png')}>
+                    title='Category'>
                     {/* <Text style={{ marginBottom: 10 }}>
                         The idea with React Native Elements is more about component structure than actual design.
                      </Text> */}
