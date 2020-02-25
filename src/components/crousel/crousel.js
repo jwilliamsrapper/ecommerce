@@ -5,11 +5,6 @@ import { HomeBannerHeight,HomeBannerTimeOut } from '../../config/themeColors'
 const BannerWidth = Dimensions.get('window').width;
 const BannerHeight = HomeBannerHeight;
 
-const images = [
-    'https://akm-img-a-in.tosshub.com/sites/lovesutras/images/stories/look-fashionable-this-winter-750-2_122718060654.jpg',
-    'https://images.pexels.com/photos/291762/pexels-photo-291762.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500'
-   
-];
 
 export default class CustomCrousel extends React.Component {
 

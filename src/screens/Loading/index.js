@@ -38,32 +38,33 @@ export default class Loading extends React.Component {
         });
         console.log("connected ==-=-=>",this.state.connection)
         if (this.state.connection === true) {
-            console.log("changing screens now")
-            await checkAuth().then((res) => {
-                console.log("admin Data :::<<<==", res)
-                if (res) {
-                    getProfileData(res).then((res) => {
-                        console.log("auth data ::<<<===", res[0].docData)
-                        if (res[0].docData.status === true) {
+            // console.log("changing screens now")
+            // await checkAuth().then((res) => {
+            //     console.log("admin Data :::<<<==", res)
+            //     if (res) {
+            //         getProfileData(res).then((res) => {
+            //             console.log("auth data ::<<<===", res[0].docData)
+            //             if (res[0].docData.status === true) {
 
-                            if (res[0].docData.vendor) {
-                                console.log("vendor")
-                                this.props.navigation.navigate("Vendor")
-                            } else {
-                                console.log("App")
-                                this.props.navigation.navigate("App")
-                            }
-                        } else {
-                            this.props.navigation.navigate("Disabled");
-                        }
+            //                 if (res[0].docData.vendor) {
+            //                     console.log("vendor")
+            //                     this.props.navigation.navigate("Vendor")
+            //                 } else {
+            //                     console.log("App")
+            //                     this.props.navigation.navigate("App")
+            //                 }
+            //             } else {
+            //                 this.props.navigation.navigate("Disabled");
+            //             }
 
-                    })
+            //         })
 
-                } else {
-                    console.log("Authx  ")
-                    this.props.navigation.navigate("App");
-                }
-            })
+            //     } else {
+            //         console.log("Authx  ")
+            //         this.props.navigation.navigate("App");
+            //     }
+            // })
+            this.props.navigation.navigate("App")
 
         } else {
             this.setState({ noNetwork: true })
