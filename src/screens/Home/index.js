@@ -23,7 +23,7 @@ export default class Home extends React.Component {
             categories: [],
             loading: false,
             networl: false,
-            tempCat:  [cat1, cat2, cat3]
+            tempCat: [cat1, cat2, cat3]
         }
     }
 
@@ -68,52 +68,55 @@ export default class Home extends React.Component {
         // making double componenet because ther is problem with apple so rendering the banner and 
         // etc for the issue of apple it is assummption althoug;
         if (!network) {
-            return(
+            return (
                 <ScrollView style={Styles.container}>
+                    {!!loading &&
+                        <View>
+                            <ActivityIndicator size="large" color="black" />
+                        </View>}
+                    <View style={Styles.container}>
 
-                <View style={Styles.container}>
+                        {/* banner */}
+                        <View style={Styles.banner} >
+                            <TouchableOpacity>
+                                <Image source={banner2} style={{ width: '100%', height: 340 }} />
+                            </TouchableOpacity>
+                        </View>
+                        {/* {banner Ends...} */}
 
-                    {/* banner */}
-                    <View style={Styles.banner} >
-                        <TouchableOpacity>
-                          <Image source={banner2} style={{width: '100%', height: 340}}/>
-                        </TouchableOpacity>
+                        {/* other square swipeable second banner */}
+
+
+                        {/* banner end */}
+                        {/* other square swipeable third banner */}
+                        <View style={Styles.horizontalSwipeContainer} >
+                            <ScrollView style={Styles.swipeCategory} horizontal={true} showsHorizontalScrollIndicator={false}>
+                                <View style={Styles.square2}>
+                                    {!!tempCat.length && tempCat.map((item, i) => {
+                                        // console.log(item.docId)
+
+                                        return (
+                                            <TouchableOpacity
+                                                onPress={() => { this.props.navigation.navigate("Product") }}
+                                                key={i}
+                                                style={{ flex: 1, height: 160, maxWidth: 230, minWidth: 140 }}
+                                            >
+                                                <SquareHorizontalSwipe
+
+                                                    image={item}
+                                                    dealName={'Go to Category'}
+                                                />
+                                            </TouchableOpacity>
+                                        )
+                                    })}
+
+                                </View>
+                            </ScrollView>
+                        </View>
+
+                        {/* banner end */}
                     </View>
-                    {/* {banner Ends...} */}
-
-                    {/* other square swipeable second banner */}
-
-
-                    {/* banner end */}
-                    {/* other square swipeable third banner */}
-                    <View style={Styles.horizontalSwipeContainer} >
-                        <ScrollView style={Styles.swipeCategory} horizontal={true} showsHorizontalScrollIndicator={false}>
-                            <View style={Styles.square2}>
-                                {!!tempCat.length && tempCat.map((item, i) => {
-                                    // console.log(item.docId)
-
-                                    return (
-                                        <TouchableOpacity
-                                            onPress={() => { this.props.navigation.navigate("Product") }}
-                                            key={i}
-                                            style={{ flex: 1, height: 160, maxWidth: 230, minWidth: 140 }}
-                                        >
-                                            <SquareHorizontalSwipe
-
-                                                image={item}
-                                                dealName={'Go to Category'}
-                                            />
-                                        </TouchableOpacity>
-                                    )
-                                })}
-
-                            </View>
-                        </ScrollView>
-                    </View>
-
-                    {/* banner end */}
-                </View>
-            </ScrollView>
+                </ScrollView>
             )
         } else {
             return (
