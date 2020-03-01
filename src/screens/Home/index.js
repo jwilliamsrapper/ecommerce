@@ -23,7 +23,8 @@ export default class Home extends React.Component {
             categories: [],
             loading: false,
             networl: false,
-            tempCat: [cat1, cat2, cat3]
+            tempCat: [cat1, cat2, cat3],
+            active: false
         }
     }
 
@@ -60,10 +61,13 @@ export default class Home extends React.Component {
         this.setState({ categories: resss })
         this.setState({ loading: false, network: true })
         await this.registerForPushNotificationsAsync();
+        setTimeout(()=>{
+            this.setState({active: true})
+        },5000)
     }
 
     render() {
-        const { categories, topBanner, discounts, loading, network, tempCat } = this.state
+        const { categories, topBanner, discounts, loading, network, tempCat, active } = this.state
         console.log(topBanner)
         // making double componenet because ther is problem with apple so rendering the banner and 
         // etc for the issue of apple it is assummption althoug;
@@ -131,6 +135,7 @@ export default class Home extends React.Component {
                             //  marginTop: '20%'
                         }}>
                             <ActivityIndicator size="large" color="black" />
+                            {!!active && <Text>You need an active internet connection...</Text>}
                         </View>}
                     {!loading && <View style={Styles.container}>
 

@@ -13,9 +13,14 @@ import 'firebase/firestore'
     measurementId: "G-T4GYXX9989"
 
   };
+
+  // this code is remove for the only pupose of ipad
   // Initialize Firebase
-  if (!firebase.apps.length) {
-    firebase.initializeApp(firebaseConfig);
-}
+  // if (!firebase.apps.length) {
+  //   firebase.initializeApp(firebaseConfig);
+  // }
+  // code ends here
+  
+  firebase.initializeApp(firebaseConfig);
 
   export default firebase;

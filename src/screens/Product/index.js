@@ -8,10 +8,6 @@ import { getDataAll, getDataForProductsAll } from '../../config/firebase/Databas
 import { TouchableOpacity } from 'react-native-gesture-handler';
 
 
-
-
-
-
 function Item({ title, props }) {
   // console.log("===>>",title.docData.allData.salePrice)
   const price = title.docData.allData.price;
@@ -114,7 +110,8 @@ export default class Product extends React.Component {
     this.state = {
       categories: '',
       product: [],
-      loading: true
+      loading: true,
+      active: false
     }
   }
 
@@ -123,13 +120,15 @@ export default class Product extends React.Component {
     this.setState({ categories: res });
     const ress = await getDataAll('product');
     this.setState({ product: ress })
+    setTimeout(()=>{
+      this.setState({active: true})
+    },5000)
     this.setState({loading: false})
-
 
   }
 
   render() {
-    const { categories, product, loading } = this.state;
+    const { categories, product, loading, active } = this.state;
 
     return (
       <View style={Styles.container}>
@@ -144,6 +143,7 @@ export default class Product extends React.Component {
             //  marginTop: '20%'
           }}>
             <ActivityIndicator size="large" color="black" />
+            {!!active && <Text>You need an active internet connection...</Text>}
           </View>}
         <View  >
 
