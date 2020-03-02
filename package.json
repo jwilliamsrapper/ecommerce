@@ -9,6 +9,7 @@
   },
   "dependencies": {
     "@react-native-community/netinfo": "4.6.0",
+    "Base64": "^1.1.0",
     "base": "^3.0.0",
     "expo": "~36.0.0",
     "expo-font": "~8.0.0",
