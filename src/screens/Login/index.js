@@ -37,20 +37,26 @@ class Login extends React.Component {
     }
 
     async componentDidMount() {
-
+        // this should be the current route;
         console.log(this.props.navigation.state.routeName)
         this.setState({ loading: true })
+        // auth will return the current loged in user uid;
         checkAuth().then(async (res) => {
+            console.log("res", res)
+            // that will gonna mean if res means user is gonna loged in then go ahead and figure out;
             if (res) {
                 this.setState({ isLogin: true })
                 await AsyncStorage.setItem('uid', res);
-
-                getProfileData(res).then((res) => {
-                    console.log("auth data ::<<<===", res[0].docData.vendor)
+                // this will return all the data of user id(res) this can be false when someone from admin loged in;
+                getProfileData(res).then((resp) => {
+                    console.log("auth data ::<<<===", resp);
+                    // one more check that data is still is iniside the current doc can be 0 when admin user gonna come;
+                    // if it will come 0 then send back to login;
+                    if(resp.length){
                     if (this.props.navigation.state.routeName !== "Setting") {
                         this.setState({ setting: false })
-                        if (res[0].docData.status === true) {
-                            if (res[0].docData.vendor) {
+                        if (resp[0].docData.status === true) {
+                            if (resp[0].docData.vendor) {
                                 this.props.navigation.navigate("Vendor")
                             } else {
                                 this.props.navigation.navigate("App")
@@ -61,7 +67,10 @@ class Login extends React.Component {
                     } else {
                         this.setState({ setting: false })
                     }
-                    this.setState({ profile: res })
+                    this.setState({ profile: resp })
+                }else{
+                    this.setState({isLogin: false, loading: false})
+                }
                 })
             } else {
                 this.setState({ loading: false })
@@ -99,7 +108,8 @@ class Login extends React.Component {
         this.setState({ loading: true, isLogin: false })
         await AsyncStorage.removeItem("uid");
         await signout();
-        this.props.navigation.navigate("Auth")
+        // removed for the apple navigation issue
+        // this.props.navigation.navigate("Auth")
         this.componentDidMount();
     }
 

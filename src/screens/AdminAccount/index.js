@@ -33,7 +33,7 @@ export default class Account extends React.Component {
         this.setState({loading: true})
         await AsyncStorage.removeItem("uid");
         await SignOut();
-        this.props.navigation.navigate("Auth")
+        this.props.navigation.navigate("App")
     }
     render() {
         const {loading, userName, image} = this.state;
