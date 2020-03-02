@@ -8,7 +8,7 @@ import { Provider } from 'react-redux';
 import { createStore } from 'redux';
 import productReducer from './src/store/reducer';
 import { AppLoading } from 'expo';
-import {decode, encode} from 'Base64'
+import {decode, encode} from 'base-64'
 
 if (!global.btoa) {  global.btoa = encode }
 
