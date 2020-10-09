@@ -50,6 +50,7 @@ export default createBottomTabNavigator(
          
         },
       }),
+      //
       tabBarOptions: {
         activeTintColor: 'black',
         inactiveTintColor: 'gray',

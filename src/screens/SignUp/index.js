@@ -42,12 +42,12 @@ export default class Login extends React.Component {
         checkAuth().then((res) => {
           console.log('check auth==', res)
           if (res !== false) {
-            console.log("third confitio")
+            console.log("third condition")
             saveUsers(lastName, email, phone, res, checked).then((res) => {
               console.log("checking for third conditions")
               if (res === "sucess") {
                 console.log("last contdition")
-                alert("Your account is registered");
+                Alert.alert('Congrats','You have signed up successfully');
                 this.setState({ loading: false })
                 this.props.navigation.navigate("Load");
               }
@@ -56,7 +56,10 @@ export default class Login extends React.Component {
         })
       } else {
         this.setState({ loading: false })
-        alert(res)
+
+        Alert.alert("Couldn't Sign up", res);
+
+        
       }
     })
   }
@@ -124,14 +127,18 @@ export default class Login extends React.Component {
 
         {!!!loading && <TouchableOpacity style={styles.buttonView}
           onPress={this.handleSubmitSignUp}>
-          <Text style={styles.textColor} > Register </Text>
+          <Text style={styles.textColor} > Sign Up </Text>
         </TouchableOpacity>}
         {!!!loading && <View style={styles.signUpView}>
           <Text style={styles.signText}>
-            Not the first time?
+            Already have an account?
           </Text>
           <TouchableOpacity onPress={() => this.props.navigation.navigate('Login')} style={styles.signupButton}>
-            <Text style={styles.textColor}>Login.</Text>
+            <Text style={styles.textColor}>Login. </Text>
+          </TouchableOpacity>
+          <Text style={styles.signText}> No?</Text>
+          <TouchableOpacity onPress={() => this.props.navigation.navigate('Home')} style={styles.signupButton}>
+            <Text style={styles.textColor}>Go Home</Text>
           </TouchableOpacity>
         </View>}
 
