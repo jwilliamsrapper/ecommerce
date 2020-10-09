@@ -8,6 +8,7 @@ import {
     Text,
     Image,
     AsyncStorage,
+    Alert
 } from "react-native";
 import styles from './style'
 import { Header } from 'react-navigation-stack';
@@ -94,7 +95,7 @@ class Login extends React.Component {
                 })
                 this.componentDidMount();
             } else {
-                alert(res)
+                Alert.alert("Couldn't Log in", "Please enter the correct email and password for your account.");
                 this.setState({ loading: false })
             }
         })
@@ -173,12 +174,21 @@ class Login extends React.Component {
                         </TouchableOpacity>}
                         {!!!loading && <View style={styles.signUpView}>
                             <Text style={styles.signText}>
-                                First time here?
+                                Need an account?
           </Text>
                             <TouchableOpacity
                                 onPress={() => this.props.navigation.navigate('SignUp')}
                                 style={styles.signupButton}>
-                                <Text style={styles.textColor}>Sign up.</Text>
+                                <Text style={styles.textColor}>Sign up. </Text>
+                            </TouchableOpacity>
+
+
+                            <TouchableOpacity
+                                onPress={() => this.props.navigation.navigate('Home')}
+                                style={styles.signupButton}>
+                                <Text style={styles.signText}>No? <Text style={styles.textColor}>Go Home</Text>
+                                </Text>
+                               
                             </TouchableOpacity>
                         </View>}
 
