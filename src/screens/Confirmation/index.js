@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { View, AsyncStorage, KeyboardAvoidingView, ActivityIndicator} from 'react-native'
 import { getBillInfo,getShipingCost } from '../../config/firebase/Database/GetData'
 import { Container, Header, Content, Form, Item, Input, Label, Button, Text } from 'native-base';
+import { Alert } from 'react-native';
 
 class index extends Component {
     constructor() {
@@ -35,8 +36,8 @@ class index extends Component {
 
     handleConfirm= ()=>{
         const { city, state,address,name, zipcode } = this.state;
-        if(city === '' && state === '' && name === '' && address === '' && zipcode === ''){
-            alert("all field required")
+        if(city === '' || state === '' || name === '' || address === '' || zipcode === ''){
+            Alert.alert("Required","Please fill out all fields");
         }else{
             this.props.navigation.navigate("AddSubscription",{city, state, address, name, zipcode});
             
@@ -86,8 +87,8 @@ class index extends Component {
                                 />
                             </Item>
                             <Button onPress={this.handleConfirm}
-                            style={{ marginTop: 20, alignSelf: 'center' }}>
-                                <Text>Confirm!</Text>
+                            style={{ marginTop: 20, alignSelf: 'center', backgroundColor: 'black', fontWeight: '700' }}>
+                                <Text>Confirm</Text>
                             </Button>
                         </Form>
                     </Content>

@@ -94,17 +94,17 @@ class Cart extends React.Component {
                         <Text style={{
                             alignSelf: 'center',
                             padding: 18,
-                            backgroundColor: 'green',
+                            backgroundColor: 'black',
                             color: 'white',
                             fontWeight: 'bold',
                             marginTop: 30
-                        }}>Check Out</Text>
+                        }}>Proceed to checkout</Text>
                     </TouchableOpacity>}
                     {!!this.props.products.current.length && <TouchableOpacity onPress={this.handleEmpty}>
                         <Text style={{
                             alignSelf: 'center',
                             padding: 15,
-                            backgroundColor: 'red',
+                            backgroundColor: 'grey',
                             color: 'white',
                             fontWeight: 'bold',
                             marginTop: 30

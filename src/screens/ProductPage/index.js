@@ -305,7 +305,7 @@ class ProductPage extends React.Component {
                 justifyContent: 'center',
                 alignContent: 'center',
                 alignSelf: 'center',
-                backgroundColor: 'black',
+                backgroundColor: 'gray',
                 width: '50%',
                 height: 50,
                 alignItems: 'center',
