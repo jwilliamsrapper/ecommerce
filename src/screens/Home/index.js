@@ -38,7 +38,7 @@ export default class Home extends React.Component {
 
         // Stop here if the user did not grant permissions
         if (status !== 'granted') {
-            alert('No notification permissions!');
+            Alert.alert("Notifications","notifications are turned off")
             return;
         }
 
