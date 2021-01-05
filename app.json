@@ -26,11 +26,15 @@
     ],
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "com.ThePeoplesDevelopment.Mode"
+      "bundleIdentifier": "com.ThePeoplesDevelopment.Mode",
+      "buildNumber": "2"
+
     },
     "description": "",
     "android": {
-      "package": "com.ThePeoplesDevelopment.Mode"
+      "package": "com.ThePeoplesDevelopment.Mode",
+      "versionCode": 2
+
     }
   }
 }
